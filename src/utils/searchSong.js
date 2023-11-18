@@ -45,7 +45,8 @@ module.exports = searchSong = async (query, apiKey) => {
 		checkOptions({ query: query, apiKey: apiKey });
 		const song = sanitizeQuery(query);
 		const reqUrl = `${config.API_URL}${encodeURIComponent(song)}`;
-		let { data } = await axios.get(`${reqUrl}&access_token=${apiKey}`);
+		const response = await fetch(`${reqUrl}&access_token=${apiKey}`);
+		const data = await response.json();
 		if (data.response.hits.length === 0) return null;
 
 		const { full_title, song_art_image_url, url, artist_names } = data.response.hits[0].result;

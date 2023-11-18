@@ -1,4 +1,3 @@
-const axios = require('axios');
 const cheerio = require('cheerio');
 
 /**
@@ -9,7 +8,8 @@ const cheerio = require('cheerio');
  */
 module.exports = extractLyrics = async (url) => {
 	try {
-		let { data } = await axios.get(url);
+		const response = await fetch(url);
+        const data = await response.text();
 		const $ = cheerio.load(data);
 		let lyrics = $('div[class="lyrics"]').text().trim();
 		if (!lyrics) {

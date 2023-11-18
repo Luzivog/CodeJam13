@@ -3,8 +3,16 @@ import React from 'react';
 import { Input, Space, ConfigProvider } from 'antd';
 const { Search } = Input;
 import searchSong from '../utils/searchSong';
+import getEmotionsFromQuery from '../utils/getEmotionsFromQuery';
+import config from '../config';
+
 const SearchBar = () => {
-    const onSearch = (value, _e, info) => console.log(info?.source, value);
+    const onSearch = async (value, _e, info) => {
+        const infos = await searchSong(value, config.API_KEY);
+        const emotions = await getEmotionsFromQuery(infos.lyrics);
+        for (const emotion in emotions) emotions[emotion] = Math.round(emotions[emotion] * 10000)/100;
+        console.log(infos, emotions)
+    };
     return (
         <ConfigProvider
             theme={{

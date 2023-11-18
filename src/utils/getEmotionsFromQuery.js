@@ -1,18 +1,19 @@
-const { spawn } = require('child_process');
-
-module.exports = getEmotionsFromLyrics = async (lyrics) => {
+module.exports = getEmotionsFromQuery = async (lyrics) => {
     try {
-        const pythonProcess = spawn('python', ['./get_emotions.py', ...lyrics]);
-        const result = await new Promise((resolve, reject) => {
-            pythonProcess.stdout.on('data', (data) => {
-                resolve(JSON.parse(data.toString().replace(/'/g, '"')));
-            });
-            pythonProcess.stderr.on('data', (data) => {
-                reject(data.toString());
-            });
+        const response = await fetch('http://localhost:3001/getEmotions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ lyrics }),
         });
-        return result
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        return await response.json();
     } catch (error) {
         console.error("Error:", error);
-    };
+    }
 };
