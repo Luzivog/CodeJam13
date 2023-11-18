@@ -26,6 +26,7 @@ module.exports = extractLyrics = async (url) => {
 		}
 		if (!lyrics) return null;
 
+		lyrics = lyrics.replace(/\d/g, '');
 		lyrics = lyrics.replace(/[\[(][^\])]*[\])]/g, '');
 		lyrics = lyrics.replace(/^\s*[\r\n]/gm, '');
 		lyrics = lyrics.replace(/[^\w\s]/g, '');

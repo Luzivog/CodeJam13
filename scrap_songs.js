@@ -31,7 +31,6 @@ import('load-json-file').then(async ({ loadJsonFile }) => {
         const emotions = await getEmotionsFromQuery(infos.lyrics);
         for (const emotion in emotions) emotions[emotion] = Math.round(emotions[emotion] * 10000)/100;
         infos.emotions = emotions;
-        delete infos.lyrics;
 
         fs.readFile('data.json', 'utf8', (err, data) => {
             if (err) return console.error(err);
