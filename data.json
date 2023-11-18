@@ -1,0 +1,41 @@
+[
+  {
+    "title": "You Know You're Right by Nirvana",
+    "artist_name": "Nirvana",
+    "albumArt": "https://images.genius.com/e30cace3aab86206c20410f0e8f539d7.1000x1000x1.jpg",
+    "emotions": {
+      "sadness": 7.36,
+      "joy": 50.03,
+      "love": 3.58,
+      "anger": 30.98,
+      "fear": 7.88,
+      "surprise": 0.17
+    }
+  },
+  {
+    "title": "Here We Go... Again by The Weeknd (Ft. Tyler, The Creator)",
+    "artist_name": "The Weeknd (Ft. Tyler, The Creator)",
+    "albumArt": "https://images.genius.com/f15065ef66cd717c267d3f2e37313bc1.1000x1000x1.jpg",
+    "emotions": {
+      "sadness": 7.54,
+      "joy": 45.46,
+      "love": 3.43,
+      "anger": 33.53,
+      "fear": 9.49,
+      "surprise": 0.56
+    }
+  },
+  {
+    "title": "Best Tweets by Jaden",
+    "artist_name": "Jaden",
+    "albumArt": "https://images.genius.com/aa58a59b0c82174e90b9bf6658ada7b3.640x640x1.jpg",
+    "emotions": {
+      "sadness": 15.9,
+      "joy": 59.37,
+      "love": 1.55,
+      "anger": 15.64,
+      "fear": 6.89,
+      "surprise": 0.66
+    }
+  }
+]
