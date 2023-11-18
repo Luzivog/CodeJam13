@@ -66,4 +66,3 @@ for k in totals.keys():
     average[k] = totals[k] / len(predictions)
 
 print(average)
-#print(classifier(' '.join(lyrics)))
