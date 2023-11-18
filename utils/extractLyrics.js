@@ -8,7 +8,7 @@ const cheerio = require('cheerio-without-node-native');
  * @throws {Error} - If an error occurs during the extraction process.
  */
 const extractLyrics = async (url) => {
-    try {
+	try {
 		let { data } = await axios.get(url);
 		const $ = cheerio.load(data);
 		let lyrics = $('div[class="lyrics"]').text().trim();
@@ -25,10 +25,16 @@ const extractLyrics = async (url) => {
 			});
 		}
 		if (!lyrics) return null;
-		return lyrics.trim();
+
+		lyrics = lyrics.replace(/[\[(][^\])]*[\])]/g, '');
+		lyrics = lyrics.replace(/^\s*[\r\n]/gm, '');
+		lyrics = lyrics.replace(/[^\w\s]/g, '');
+		lyrics = lyrics.replace(/^\s+|\s+$/gm, '');
+		return lyrics.toLowerCase().trim();
+		
 	} catch (e) {
 		throw e;
-	}
-}
+	};
+};
 
 module.exports = extractLyrics;
