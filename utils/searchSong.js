@@ -1,8 +1,15 @@
 const axios = require('axios');
 const extractLyrics = require('./extractLyrics');
+require('dotenv').config('../.env');
 
-const searchUrl = 'https://api.genius.com/search?q=';
-
+/**
+ * Checks the options object for required properties.
+ * @param {Object} options - The options object.
+ * @param {string} options.apiKey - The API key.
+ * @param {string} options.query - The search query.
+ * @throws {string} Throws an error if the "apiKey" property is missing from options.
+ * @throws {string} Throws an error if the "query" property is missing from options.
+ */
 const checkOptions = (options) => {
 	let { apiKey, query } = options;
 	if (!apiKey) {
@@ -12,6 +19,11 @@ const checkOptions = (options) => {
 	};
 };
 
+/**
+ * Sanitizes a query by removing unnecessary characters and formatting it.
+ * @param {string} query - The query to be sanitized.
+ * @returns {string} The sanitized query.
+ */
 const sanitizeQuery = (query) => {
 	return query
 		.toLowerCase()
@@ -33,7 +45,7 @@ module.exports = searchSong = async (query, apiKey) => {
     try {
 		checkOptions({query: query, apiKey: apiKey});
 		const song = sanitizeQuery(query);
-		const reqUrl = `${searchUrl}${encodeURIComponent(song)}`;
+		const reqUrl = `${process.env.API_URL}${encodeURIComponent(song)}`;
 		let { data } = await axios.get(`${reqUrl}&access_token=${apiKey}`);
 
 		if (data.response.hits.length === 0) return null;
