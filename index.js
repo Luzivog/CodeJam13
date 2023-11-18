@@ -1,7 +1,8 @@
-const getInfosFromQuery = require('./utils/getInfosFromQuery');
+const searchSong = require('./utils/searchSong');
 require('dotenv').config();
 
 (async () => {
-    const infos = await getInfosFromQuery('bling lits', process.env.API_KEY);
+    const infos = await searchSong('baby justin bieber', process.env.API_KEY);
+    console.log(infos);
 })();
 

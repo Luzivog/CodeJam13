@@ -22,15 +22,16 @@ const sanitizeQuery = (query) => {
 		.trim();
 };
 
-
 /**
- * @param {{apiKey: string, query: string}} options
+ * Searches for a song based on the provided query and API key.
+ * @param {string} query - The search query for the song.
+ * @param {string} apiKey - The API key for accessing the song search API.
+ * @returns {Promise<Object|null>} - A promise that resolves to an object containing the song details (title, artist name, album art, lyrics) if a matching song is found. Returns null if no song is found.
+ * @throws {Error} - If any error occurs during the search process.
  */
-
-const searchSong = async (options) => {
+const searchSong = async (query, apiKey) => {
     try {
-		checkOptions(options);
-		let { apiKey, query } = options;
+		checkOptions({query: query, apiKey: apiKey});
 		const song = sanitizeQuery(query);
 		const reqUrl = `${searchUrl}${encodeURIComponent(song)}`;
 		let { data } = await axios.get(`${reqUrl}&access_token=${apiKey}`);

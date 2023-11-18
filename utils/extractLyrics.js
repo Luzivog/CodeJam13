@@ -2,7 +2,10 @@ const axios = require('axios');
 const cheerio = require('cheerio-without-node-native');
 
 /**
- * @param {string} url - Genius URL
+ * Extracts lyrics from a given URL.
+ * @param {string} url - The URL of the webpage containing the lyrics.
+ * @returns {Promise<string|null>} - A promise that resolves to the extracted lyrics as a string, or null if no lyrics are found.
+ * @throws {Error} - If an error occurs during the extraction process.
  */
 const extractLyrics = async (url) => {
     try {
