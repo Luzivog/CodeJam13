@@ -1,7 +1,6 @@
 const axios = require('axios');
 const extractLyrics = require('./extractLyrics');
-require('dotenv').config('../../.env');
-
+const config = require('../config');
 /**
  * Checks the options object for required properties.
  * @param {Object} options - The options object.
@@ -45,9 +44,8 @@ module.exports = searchSong = async (query, apiKey) => {
 	try {
 		checkOptions({ query: query, apiKey: apiKey });
 		const song = sanitizeQuery(query);
-		const reqUrl = `${process.env.API_URL}${encodeURIComponent(song)}`;
+		const reqUrl = `${config.API_URL}${encodeURIComponent(song)}`;
 		let { data } = await axios.get(`${reqUrl}&access_token=${apiKey}`);
-
 		if (data.response.hits.length === 0) return null;
 
 		const { full_title, song_art_image_url, url, artist_names } = data.response.hits[0].result;

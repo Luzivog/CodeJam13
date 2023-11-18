@@ -4,11 +4,10 @@
     "@canvasjs/react-charts": "^1.0.0",
     "antd": "^5.11.2",
     "axios": "^1.6.2",
-    "cheerio-without-node-native": "^1.0.0-rc.2",
+    "cheerio": "^1.0.0-rc.12",
     "child_process": "^1.0.2",
     "crypto-browserify": "^3.12.0",
     "csv-parser": "^3.0.0",
-    "dotenv": "^16.3.1",
     "json2csv": "^6.0.0-alpha.2",
     "load-json-file": "^7.0.1",
     "react": "^18.2.0",
@@ -18,8 +17,13 @@
     "youtube-sr": "^4.3.9",
     "ytdl-core": "^4.11.5"
   },
+  "resolve": {
+    "fallback": {
+      "util": "require.resolve('util/')"
+    }
+  },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "GENERATE_SOURCEMAP=false react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -1,5 +1,5 @@
 const axios = require('axios');
-const cheerio = require('cheerio-without-node-native');
+const cheerio = require('cheerio');
 
 /**
  * Extracts lyrics from a given URL.

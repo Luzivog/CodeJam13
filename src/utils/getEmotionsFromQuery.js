@@ -1,5 +1,4 @@
 const { spawn } = require('child_process');
-require('dotenv').config('../.env');
 
 module.exports = getEmotionsFromLyrics = async (lyrics) => {
     try {

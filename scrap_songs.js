@@ -2,6 +2,7 @@ const fs = require('fs');
 const csv = require('csv-parser');
 const getEmotionsFromQuery = require('./utils/getEmotionsFromQuery');
 const searchSong = require('./utils/searchSong');
+const { config } = require('process');
 
 const readCSV = async (path) => {
     return await new Promise((resolve, reject) => {
@@ -22,7 +23,7 @@ import('load-json-file').then(async ({ loadJsonFile }) => {
     saved_data_set = new Set(saved_data.map(row => row.title));
 
     for (const row of file) {
-        const infos = await searchSong(row.title, process.env.API_KEY);
+        const infos = await searchSong(row.title, config.API_KEY);
         if (saved_data_set.has(infos.title)) {
             console.log(infos.title + " already in data.json")
             continue
