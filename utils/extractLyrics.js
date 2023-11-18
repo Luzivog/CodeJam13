@@ -7,7 +7,7 @@ const cheerio = require('cheerio-without-node-native');
  * @returns {Promise<string|null>} - A promise that resolves to the extracted lyrics as a string, or null if no lyrics are found.
  * @throws {Error} - If an error occurs during the extraction process.
  */
-const extractLyrics = async (url) => {
+module.exports = extractLyrics = async (url) => {
 	try {
 		let { data } = await axios.get(url);
 		const $ = cheerio.load(data);
@@ -30,11 +30,10 @@ const extractLyrics = async (url) => {
 		lyrics = lyrics.replace(/^\s*[\r\n]/gm, '');
 		lyrics = lyrics.replace(/[^\w\s]/g, '');
 		lyrics = lyrics.replace(/^\s+|\s+$/gm, '');
-		return lyrics.toLowerCase().trim();
+		lyrics = lyrics.toLowerCase().trim().split('\n');
+		return lyrics;
 		
 	} catch (e) {
 		throw e;
 	};
 };
-
-module.exports = extractLyrics;

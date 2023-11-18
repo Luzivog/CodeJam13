@@ -29,7 +29,7 @@ const sanitizeQuery = (query) => {
  * @returns {Promise<Object|null>} - A promise that resolves to an object containing the song details (title, artist name, album art, lyrics) if a matching song is found. Returns null if no song is found.
  * @throws {Error} - If any error occurs during the search process.
  */
-const searchSong = async (query, apiKey) => {
+module.exports = searchSong = async (query, apiKey) => {
     try {
 		checkOptions({query: query, apiKey: apiKey});
 		const song = sanitizeQuery(query);
@@ -49,7 +49,4 @@ const searchSong = async (query, apiKey) => {
 	} catch (e) {
 		throw e;
 	};
-}
-
-
-module.exports = searchSong;
+};
