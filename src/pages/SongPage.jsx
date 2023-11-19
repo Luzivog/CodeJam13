@@ -10,7 +10,7 @@ import "./SongPage.css";
 const SongPage = () => {
 
   const location = useLocation();
-  const [infos, setInfos] = useState(location.state?.inf); // [title, artist, lyrics
+  const [infos, setInfos] = useState(location.state?.infos); // [title, artist, lyrics
   const [emotions, setEmotions] = useState([]);
 
   const queryParams = new URLSearchParams(location.search);
@@ -62,8 +62,6 @@ const SongPage = () => {
         inf = await searchSong(id, config.API_KEY);
         setInfos(inf);
       }
-      console.log("INFOS:")
-      console.log(inf)
 
 
       console.log("Fetching emotions...")
