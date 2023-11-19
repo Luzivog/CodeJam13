@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import baseSongs from '../data.json';
 import IconMenu from '../components/menu';
 
@@ -59,18 +59,6 @@ const styles = {
     }
 };
 
-const SongItem = ({ song }) => {
-    return (
-        <div style={styles.songItem}>
-            <img src={song.albumArt} alt={song.title} style={styles.albumArt} />
-            <div style={styles.songInfo}>
-                <h3 style={styles.songTitle}>{song.title.split('by')[0]}</h3>
-                <p style={styles.artistName}>{song.artist_name}</p>
-            </div>
-        </div>
-    );
-};
-
 const NoSongsMessage = () => {
     return (
         <div style={styles.noSongsMessage}>
@@ -80,6 +68,24 @@ const NoSongsMessage = () => {
 };
 
 const DataPage = () => {
+
+    const navigate = useNavigate();
+
+    const SongItem = ({ song }) => {
+        return (
+            <div 
+                style={styles.songItem}
+                onClick={() => navigate(`/song?songName=${song.title}`, { state: { infos: song } })}    
+            >
+                <img src={song.albumArt} alt={song.title} style={styles.albumArt} />
+                <div style={styles.songInfo}>
+                    <h3 style={styles.songTitle}>{song.title.split('by')[0]}</h3>
+                    <p style={styles.artistName}>{song.artist_name}</p>
+                </div>
+            </div>
+        );
+    };
+
     const [emotions, setEmotions] = useState({
         sadness: false,
         joy: false,
@@ -127,7 +133,8 @@ const DataPage = () => {
                     {emotion.charAt(0).toUpperCase() + emotion.slice(1)}
                 </button>
             ))}
-            <div style={{'paddingBottom': '2%'}}>
+            <div style={{'paddingBottom': '2%'}}
+            >
                 {songs.length > 0 
                     ? songs.map(song => <SongItem key={song.title} song={song} />)
                     : <NoSongsMessage />
