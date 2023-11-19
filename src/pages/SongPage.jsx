@@ -18,6 +18,7 @@ const SongPage = () => {
       <h1 className="song-title">
         Blinding Lights
       </h1>
+      
       <PieChart />
       {/* Add song details here */}
     </div>
