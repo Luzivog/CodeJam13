@@ -7,7 +7,7 @@ module.exports = getEmotionsFromQuery = async (lyrics) => {
             },
             body: JSON.stringify({ lyrics }),
         });
-
+        
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

@@ -8,10 +8,29 @@ import config from '../config';
 
 const SearchBar = () => {
     const onSearch = async (value, _e, info) => {
+        console.log("Fetching song infos...")
         const infos = await searchSong(value, config.API_KEY);
-        const emotions = await getEmotionsFromQuery(infos.lyrics);
-        for (const emotion in emotions) emotions[emotion] = Math.round(emotions[emotion] * 10000)/100;
-        console.log(infos, emotions)
+        console.log(infos);
+
+        if (!infos) return console.log("No song found");
+
+        console.log("Fetching emotions...")
+        const response = await fetch('http://localhost:3001/getEmotions', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json',},
+            body: JSON.stringify({ lyrics: infos.lyrics })
+        });
+
+        const reader = response.body.getReader();
+        while(true) {
+            const {done, value} = await reader.read();
+            if (done) break;
+
+            const chunkAsString = new TextDecoder("utf-8").decode(value);
+            const chunkAsJson = JSON.parse(chunkAsString);
+            console.log('Current average:', chunkAsJson);
+        };
+        console.log('Done')
     };
     return (
         <ConfigProvider

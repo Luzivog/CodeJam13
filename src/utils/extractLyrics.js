@@ -8,32 +8,22 @@ const cheerio = require('cheerio');
  */
 module.exports = extractLyrics = async (url) => {
 	try {
-		const response = await fetch(url);
-        const data = await response.text();
-		const $ = cheerio.load(data);
-		let lyrics = $('div[class="lyrics"]').text().trim();
-		if (!lyrics) {
-			lyrics = '';
-			$('div[class^="Lyrics__Container"]').each((i, elem) => {
-				if ($(elem).text().length !== 0) {
-					let snippet = $(elem)
-						.html()
-						.replace(/<br>/g, '\n')
-						.replace(/<(?!\s*br\s*\/?)[^>]+>/gi, '');
-					lyrics += $('<textarea/>').html(snippet).text().trim() + '\n\n';
-				}
-			});
-		}
-		if (!lyrics) return null;
+		const response = await fetch('http://localhost:3001/getLyrics', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ url })
+		});
 
-		lyrics = lyrics.replace(/\d/g, '');
-		lyrics = lyrics.replace(/[\[(][^\])]*[\])]/g, '');
-		lyrics = lyrics.replace(/^\s*[\r\n]/gm, '');
-		lyrics = lyrics.replace(/[^\w\s]/g, '');
-		lyrics = lyrics.replace(/^\s+|\s+$/gm, '');
-		lyrics = lyrics.toLowerCase().trim().split('\n');
+		if (!response.ok) {
+			throw new Error(`Error: ${response.statusText}`);
+		};
+
+		const lyrics = await response.text();
+		if (!lyrics) return null;
 		return lyrics;
-		
+
 	} catch (e) {
 		throw e;
 	};

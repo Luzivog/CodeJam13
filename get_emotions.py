@@ -46,19 +46,17 @@ classifier = pipeline("text-classification", model='bhadresh-savani/bert-base-un
 
 # Reading input data (lyrics) from command line arguments
 lyrics = sys.argv[1:]
-predictions = []
+totals, average = dict.fromkeys(label2id.keys(), 0), dict.fromkeys(label2id.keys(), 0)
+count = 0
+
 for line in lyrics:
     prediction = classifier(line)
-    predictions.append(prediction[0])
+    count += 1
 
-# Calculating totals and averages of predictions
-totals, average = [dict.fromkeys(label2id.keys(), 0)]*2
-for prediction in predictions:
-    for category in prediction:
+    for category in prediction[0]:
         totals[category['label']] += category['score']
 
-for k in totals.keys():
-    average[k] = totals[k] / len(predictions)
+    for k in totals.keys():
+        average[k] = totals[k] / count
 
-# Printing the average scores
-print(average)
+    print(average)
