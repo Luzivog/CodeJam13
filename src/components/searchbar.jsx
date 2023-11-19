@@ -24,24 +24,24 @@ const SearchBar = () => {
         //go to url with song id using react-router 
 
 
-        // console.log("Fetching emotions...")
-        // const response = await fetch('http://localhost:3001/getEmotions', {
-        //     method: 'POST',
-        //     headers: {'Content-Type': 'application/json',},
-        //     body: JSON.stringify({ lyrics: infos.lyrics })
-        // });
+        console.log("Fetching emotions...")
+        const response = await fetch('http://localhost:3001/getEmotions', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json',},
+            body: JSON.stringify({ lyrics: infos.lyrics })
+        });
 
-        // const reader = response.body.getReader();
-        // while(true) {
-        //     const {done, value} = await reader.read();
-        //     if (done) break;
+        const reader = response.body.getReader();
+        while(true) {
+            const {done, value} = await reader.read();
+            if (done) break;
 
-        //     const chunkAsString = new TextDecoder("utf-8").decode(value);
-        //     console.log(chunkAsString)
-        //     const chunkAsJson = JSON.parse(chunkAsString);
-        //     console.log('Current average:', chunkAsJson);
-        // };
-        // console.log('Done')
+            const chunkAsString = new TextDecoder("utf-8").decode(value);
+            console.log(chunkAsString)
+            const chunkAsJson = JSON.parse(chunkAsString);
+            console.log('Current average:', chunkAsJson);
+        };
+        console.log('Done')
     };
     return (
         <ConfigProvider

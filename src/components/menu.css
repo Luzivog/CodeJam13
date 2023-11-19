@@ -1,0 +1,56 @@
+.iconContainer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 1200px) {
+    .iconContainer {
+        flex-direction: column;
+    }
+}
+
+.icon {
+    cursor: pointer;
+    font-size: 30px;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.icon:hover {
+    color: #000;
+    transform: scale(1.17);
+    margin: -3px;
+}
+
+/* Adjusting styles for smaller screens */
+@media (max-width: 600px) {
+    .icon {
+        font-size: 24px;
+    }
+
+    .icon:hover {
+        transform: scale(1.21);
+        margin: -2px;
+    }
+}
+
+/* Styles for when an icon is hovered */
+.hovered {
+    color: #000;
+    transform: scale(1.17);
+    margin: -3px;
+}
+
+@media (max-width: 600px) {
+    .hovered {
+        transform: scale(1.21);
+        margin: -2px;
+    }
+}

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import baseSongs from '../data.json';
+import IconMenu from '../components/menu';
 
 const styles = {
     songItem: {
@@ -92,16 +93,45 @@ const DataPage = () => {
         surprise: false
     });
 
-    const [songs, setSongs] = useState(baseSongs);
+    const [displayedSongs, setDisplayedSongs] = useState([]);
+    const [lastIndex, setLastIndex] = useState(0);
+    const loadMoreRef = useRef(null);
 
     useEffect(() => {
-        setSongs(baseSongs.filter(song => {
+        const filteredSongs = baseSongs.filter(song => {
             for (const emotion in emotions) {
                 if (emotions[emotion] && song.emotions[emotion] < 30) return false;
             };
             return true;
-        }));
+        });
+
+        setDisplayedSongs(filteredSongs.slice(0, 20));
+        setLastIndex(20);
     }, [emotions]);
+
+    const loadMoreSongs = () => {
+        const nextSongs = baseSongs.slice(lastIndex, lastIndex + 20);
+        setDisplayedSongs(prevSongs => [...prevSongs, ...nextSongs]);
+        setLastIndex(prevIndex => prevIndex + 20);
+    };
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                loadMoreSongs();
+            }
+        }, { threshold: 1.0 });
+
+        if (loadMoreRef.current) {
+            observer.observe(loadMoreRef.current);
+        }
+
+        return () => {
+            if (loadMoreRef.current) {
+                observer.unobserve(loadMoreRef.current);
+            }
+        };
+    }, [lastIndex]);
 
     const handleToggle = (emotion) => {
         setEmotions(prevEmotions => ({
@@ -112,6 +142,7 @@ const DataPage = () => {
 
     return (
         <div style={styles.dataPageContainer}>
+            <IconMenu />
             {Object.keys(emotions).map((emotion, index) => (
                 <button 
                     key={index} 
@@ -128,10 +159,11 @@ const DataPage = () => {
                 </button>
             ))}
             <div style={{'paddingBottom': '2%'}}>
-                {songs.length > 0 
-                    ? songs.map(song => <SongItem key={song.title} song={song} />)
+                {displayedSongs.length > 0 
+                    ? displayedSongs.map(song => <SongItem key={song.title} song={song} />)
                     : <NoSongsMessage />
                 }
+                <div ref={loadMoreRef} style={{ height: '20px', margin: '10px' }}></div>
             </div>
         </div>
     );

@@ -1,6 +1,7 @@
 import SearchBar from '../components/searchbar';
 import songs from '../data.json';
 import Carousel from '../components/carousel';
+import IconMenu from '../components/menu';
 
 
 const styles = {
@@ -30,6 +31,7 @@ const Home = () => {
 
     return (
         <div style={styles.mainContainer}>
+            <IconMenu />
             <div style={styles.searchContainer}>
                 <h1 style={styles.title}>Search Jam</h1>
                 <SearchBar />
