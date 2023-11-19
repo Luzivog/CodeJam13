@@ -4,13 +4,17 @@ import Chart from "react-apexcharts";
 
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
+import config from '../config';
+import "./SongPage.css";
 
 const SongPage = () => {
-  const [emotions, setEmotions] = useState([]);
+
   const location = useLocation();
+  const [infos, setInfos] = useState(location.state?.inf); // [title, artist, lyrics
+  const [emotions, setEmotions] = useState([]);
+
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get('id');
-  const infos = location.state.infos;
   var options = {
     animations: {
       enabled: true,
@@ -52,12 +56,21 @@ const SongPage = () => {
   useEffect(() => {
     //async wrapper
     (async () => {
+      // if infos is empty
+      var inf = location.state?.infos;
+      if (!inf) {
+        inf = await searchSong(id, config.API_KEY);
+        setInfos(inf);
+      }
+      console.log("INFOS:")
+      console.log(inf)
+
 
       console.log("Fetching emotions...")
       const response = await fetch('http://localhost:3001/getEmotions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', },
-        body: JSON.stringify({ lyrics: infos.lyrics })
+        body: JSON.stringify({ lyrics: inf.lyrics })
       });
 
       const reader = response.body.getReader();
@@ -93,9 +106,10 @@ const SongPage = () => {
         marginTop: "5%",
       }}
     >
-      <h1 className="song-title">
+
+      {infos && <h1 className="animate-character">
         {infos.title}
-      </h1>
+      </h1>}
 
       {/* <PieChart /> */}
       {emotions.length != 0 ? <Chart
