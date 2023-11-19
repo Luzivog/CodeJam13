@@ -1,14 +1,84 @@
-import React, { useEffect } from 'react';
-import PieChart from '../components/donut';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import Chart from "react-apexcharts";
+
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 const SongPage = () => {
+  const [emotions, setEmotions] = useState([]);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get('id');
+  const infos = location.state.infos;
+  var options = {
+    animations: {
+      enabled: true,
+      easing: 'easeinout',
+      speed: 50,
+      animateGradually: {
+        enabled: true,
+        delay: 50
+      },
+      dynamicAnimation: {
+        enabled: true,
+        speed: 350
+      },
+    },
+    labels: ["Sadness", "Joy", "Love", "Anger", "Fear", "Surprise"],
+    dataLabels: {
+      enabled: false
+    },
+    colors: ['#008ffb', '#00D8B6', '#feb019', '#ff4560', '#775dd0', '#00e396'],
+    chart: {
+      type: 'donut',
+    },
+    legend: {
+      fontSize: '24px',
+      customLegendItems: ["Sadness", "Joy", "Love", "Anger", "Fear", "Surprise"],
+    },
+    horizontalAlign: 'left',
+    // position: 'bottom'
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200
+        },
+      }
+    }]
+  };
 
   useEffect(() => {
-    
+    //async wrapper
+    (async () => {
+
+      console.log("Fetching emotions...")
+      const response = await fetch('http://localhost:3001/getEmotions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', },
+        body: JSON.stringify({ lyrics: infos.lyrics })
+      });
+
+      const reader = response.body.getReader();
+      var i = 0
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunkAsString = new TextDecoder("utf-8").decode(value);
+        if (chunkAsString.split('\n')[1] != "") {
+          console.log(chunkAsString.split('\n')[1])
+          const chunkAsJson = JSON.parse(chunkAsString.split('\n')[1]);
+          setEmotions(Object.values(chunkAsJson));
+        } else {
+          console.log(chunkAsString.split('\n')[0])
+          const chunkAsJson = JSON.parse(chunkAsString.split('\n')[0]);
+          setEmotions(Object.values(chunkAsJson));
+        }
+      };
+      console.log('Done')
+    })();
   }, [id]);
 
   return (
@@ -23,12 +93,21 @@ const SongPage = () => {
         marginTop: "5%",
       }}
     >
-      <h1>Song Page</h1>
       <h1 className="song-title">
-        Blinding Lights
+        {infos.title}
       </h1>
 
-      <PieChart />
+      {/* <PieChart /> */}
+      {emotions.length != 0 ? <Chart
+        style={{
+          marginLeft: "25%",
+        }}
+        options={options}
+        series={emotions}
+        type="donut"
+        width="500"
+      /> : <Spin indicator={<LoadingOutlined style={{ fontSize: 180 }} spin />} />}
+
       {/* Add song details here */}
     </div>
   );

@@ -5,16 +5,19 @@ const { Search } = Input;
 import searchSong from '../utils/searchSong';
 import getEmotionsFromQuery from '../utils/getEmotionsFromQuery';
 import config from '../config';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 
 const SearchBar = () => {
-    // const history = useHistory();
+    // const history = useNavigate();
+    const navigate = useNavigate();
     const onSearch = async (value, _e, info) => {
 
         console.log("Fetching song infos...")
         const infos = await searchSong(value, config.API_KEY);
         console.log(infos);
+
+        navigate(`/song?id=${infos.id}`, { state: { infos } });
 
         if (!infos) return console.log("No song found");
 
