@@ -64,7 +64,7 @@ const SongItem = ({ song }) => {
         <div style={styles.songItem}>
             <img src={song.albumArt} alt={song.title} style={styles.albumArt} />
             <div style={styles.songInfo}>
-                <h3 style={styles.songTitle}>{song.title}</h3>
+                <h3 style={styles.songTitle}>{song.title.split('by')[0]}</h3>
                 <p style={styles.artistName}>{song.artist_name}</p>
             </div>
         </div>
@@ -80,10 +80,6 @@ const NoSongsMessage = () => {
 };
 
 const DataPage = () => {
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const id = queryParams.get('id');
-
     const [emotions, setEmotions] = useState({
         sadness: false,
         joy: false,

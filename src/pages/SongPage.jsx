@@ -34,7 +34,7 @@ const SongPage = () => {
     dataLabels: {
       enabled: false
     },
-    colors: ['#008ffb', '#00D8B6', '#feb019', '#ff4560', '#775dd0', '#00e396'],
+    colors: ['#008ffb', '#FFC833', '#FF33A6', '#ff5733', '#775dd0', '#964B00'],
     chart: {
       type: 'donut',
     },
@@ -61,7 +61,6 @@ const SongPage = () => {
 
     (async () => {
 
-      const infos = location.state?.infos;
       if (!infos) {
         infos = await searchSong(id, config.API_KEY);
         setInfos(infos);

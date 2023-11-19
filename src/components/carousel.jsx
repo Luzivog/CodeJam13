@@ -60,7 +60,6 @@ const Carousel = ({songs}) => {
                                     style={cardStyles.image}
                                 />
                                 <h3 style={cardStyles.title}>{song.title}</h3>
-                                <p style={cardStyles.artist}>{song.artist_name}</p>
                             </div>
                         ))}
                 </Slider>
