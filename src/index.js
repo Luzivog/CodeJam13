@@ -12,8 +12,6 @@ import {
 } from "react-router-dom";
 import DataPage from './pages/DataPage';
 
-
-// function App() {
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,7 +20,6 @@ const router = createBrowserRouter([
   {
     path: "song",
     element: <div className="App"> <SongPage /></div>,
-    // loader: teamLoader,
   },
   {
     path: "suggest",
@@ -34,14 +31,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+
 reportWebVitals();

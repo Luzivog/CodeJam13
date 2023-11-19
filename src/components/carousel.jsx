@@ -1,7 +1,8 @@
 import React from 'react';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css'; 
+import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useNavigate } from 'react-router';
 
 const cardStyles = {
     container: {
@@ -37,7 +38,9 @@ const cardStyles = {
     }
 };
 
-const Carousel = ({songs}) => {
+const Carousel = ({ songs }) => {
+
+    const navigate = useNavigate();
 
     const settings = {
         dots: true,
@@ -51,19 +54,24 @@ const Carousel = ({songs}) => {
 
     return (
         <div style={cardStyles.container}>
-                <Slider {...settings}>
-                        {songs.slice(0,15).map((song, index) => (
-                            <div key={index} style={cardStyles.card}>
-                                <img 
-                                    src={song.albumArt} 
-                                    alt={`${song.artist_name} album art`} 
-                                    style={cardStyles.image}
-                                />
-                                <h3 style={cardStyles.title}>{song.title}</h3>
-                            </div>
-                        ))}
-                </Slider>
-            </div>
+            <Slider {...settings}>
+                {songs.slice(0, 15).map((song, index) => {
+                    return (
+                    <div
+                        key={index}
+                        style={cardStyles.card}
+                        onClick={() => navigate(`/song?songName=${song.title}`, { state: { infos: song } })}
+                    >
+                        <img
+                            src={song.albumArt}
+                            alt={`${song.artist_name} album art`}
+                            style={cardStyles.image}
+                        />
+                        <h3 style={cardStyles.title}>{song.title}</h3>
+                    </div>
+                )})}
+            </Slider>
+        </div>
     );
 };
 

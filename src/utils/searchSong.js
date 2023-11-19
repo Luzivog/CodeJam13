@@ -1,4 +1,3 @@
-const axios = require('axios');
 const extractLyrics = require('./extractLyrics');
 const config = require('../config');
 /**

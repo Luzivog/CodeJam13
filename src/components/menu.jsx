@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { AiOutlineHome, AiOutlineDatabase } from "react-icons/ai";
-import { BsMusicNoteBeamed } from "react-icons/bs";
 import './menu.css';
 
 const IconMenu = () => {

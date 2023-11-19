@@ -90,10 +90,12 @@ const DataPage = () => {
     });
 
     const [songs, setSongs] = useState(baseSongs);
+    console.log(songs)
 
     useEffect(() => {
         setSongs(baseSongs.filter(song => {
             for (const emotion in emotions) {
+                console.log(song.emotions)
                 if (emotions[emotion] && song.emotions[emotion] < 30) return false;
             };
             return true;
