@@ -2,6 +2,7 @@
 from transformers import DataCollatorWithPadding, Trainer, TrainingArguments, BertTokenizer, BertConfig, BertForSequenceClassification, pipeline
 from sklearn.metrics import accuracy_score, f1_score
 import sys
+import json
 
 # Function to compute metrics for model evaluation
 def compute_metrics(pred):
@@ -45,7 +46,10 @@ pre_trainer = Trainer(
 classifier = pipeline("text-classification", model='RicoCHEH/output', top_k=None)
 
 # Reading input data (lyrics) from command line arguments
+
+
 lyrics = sys.argv[1:]
+
 totals, average = dict.fromkeys(label2id.keys(), 0), dict.fromkeys(label2id.keys(), 0)
 count = 0
 
@@ -59,4 +63,4 @@ for line in lyrics:
     for k in totals.keys():
         average[k] = totals[k] / count
 
-    print(average)
+print(average)

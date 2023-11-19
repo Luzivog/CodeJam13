@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import baseSongs from '../data.json';
 import IconMenu from '../components/menu';
@@ -93,45 +93,16 @@ const DataPage = () => {
         surprise: false
     });
 
-    const [displayedSongs, setDisplayedSongs] = useState([]);
-    const [lastIndex, setLastIndex] = useState(0);
-    const loadMoreRef = useRef(null);
+    const [songs, setSongs] = useState(baseSongs);
 
     useEffect(() => {
-        const filteredSongs = baseSongs.filter(song => {
+        setSongs(baseSongs.filter(song => {
             for (const emotion in emotions) {
                 if (emotions[emotion] && song.emotions[emotion] < 30) return false;
             };
             return true;
-        });
-
-        setDisplayedSongs(filteredSongs.slice(0, 20));
-        setLastIndex(20);
+        }));
     }, [emotions]);
-
-    const loadMoreSongs = () => {
-        const nextSongs = baseSongs.slice(lastIndex, lastIndex + 20);
-        setDisplayedSongs(prevSongs => [...prevSongs, ...nextSongs]);
-        setLastIndex(prevIndex => prevIndex + 20);
-    };
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting) {
-                loadMoreSongs();
-            }
-        }, { threshold: 1.0 });
-
-        if (loadMoreRef.current) {
-            observer.observe(loadMoreRef.current);
-        }
-
-        return () => {
-            if (loadMoreRef.current) {
-                observer.unobserve(loadMoreRef.current);
-            }
-        };
-    }, [lastIndex]);
 
     const handleToggle = (emotion) => {
         setEmotions(prevEmotions => ({
@@ -159,11 +130,10 @@ const DataPage = () => {
                 </button>
             ))}
             <div style={{'paddingBottom': '2%'}}>
-                {displayedSongs.length > 0 
-                    ? displayedSongs.map(song => <SongItem key={song.title} song={song} />)
+                {songs.length > 0 
+                    ? songs.map(song => <SongItem key={song.title} song={song} />)
                     : <NoSongsMessage />
                 }
-                <div ref={loadMoreRef} style={{ height: '20px', margin: '10px' }}></div>
             </div>
         </div>
     );
