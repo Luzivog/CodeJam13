@@ -43,6 +43,9 @@ const SongPage = () => {
       customLegendItems: ["Sadness", "Joy", "Love", "Anger", "Fear", "Surprise"],
     },
     horizontalAlign: 'left',
+    stroke: {
+      show: false
+    },
 
     responsive: [{
       breakpoint: 480,
@@ -107,11 +110,11 @@ const SongPage = () => {
         {emotions.length != 0 ? <Chart
           style={{
             marginLeft: "25%",
+            width: "60%",
           }}
           options={options}
           series={emotions}
           type="donut"
-          width="500"
         /> : <Spin indicator={<LoadingOutlined style={{ fontSize: 180 }} spin />} />}
 
       </div>

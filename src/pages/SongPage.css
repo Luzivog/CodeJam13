@@ -18,7 +18,11 @@
   -webkit-text-fill-color: transparent;
   animation: textclip 32s linear infinite;
   display: inline-block;
-  font-size: 80px;
+  font-size: 4vw;
+}
+
+.apexcharts-lengend-text {
+  font-size: 2vw !important;
 }
 
 @keyframes textclip {
