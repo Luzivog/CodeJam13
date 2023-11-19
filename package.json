@@ -1,4 +1,5 @@
 {
+  "name": "Search Jam",
   "dependencies": {
     "@canvasjs/charts": "^3.7.27",
     "@canvasjs/react-charts": "^1.0.0",
@@ -14,6 +15,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
     "web-vitals": "^3.5.0",
     "youtube-sr": "^4.3.9",
     "ytdl-core": "^4.11.5"
