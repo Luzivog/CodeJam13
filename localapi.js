@@ -47,6 +47,7 @@ app.post('/getEmotions', async (req, res) => {
         const lyrics = req.body.lyrics;
         const pythonProcess = spawn('python', ['./get_emotions.py', ...JSON.parse(lyrics).lyrics]);
         
+        const pythonProcess = spawn('python3', ['./get_emotions.py', ...JSON.parse(lyrics).lyrics]);
         res.writeHead(200, {
             'Content-Type': 'application/json',
             'Transfer-Encoding': 'chunked'
