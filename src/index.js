@@ -3,13 +3,39 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import SearchPage from './pages/SearchPage'
+import SongPage from './pages/SongPage'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+
+
+// function App() {
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <div className="App"> <SearchPage /></div>,
+  },
+  {
+    path: "song",
+    element: <div className="App"> <SongPage /></div>,
+    // loader: teamLoader,
+  },
+]);
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

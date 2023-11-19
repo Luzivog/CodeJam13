@@ -6,8 +6,7 @@ function App() {
   return (
     <div className="App">
       <SearchPage />
-      {/* <SongPage/> */}
-    </div>
+     </div>
   );
 }
 

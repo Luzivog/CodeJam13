@@ -5,32 +5,40 @@ const { Search } = Input;
 import searchSong from '../utils/searchSong';
 import getEmotionsFromQuery from '../utils/getEmotionsFromQuery';
 import config from '../config';
+import { useHistory } from 'react-router-dom';
+
 
 const SearchBar = () => {
+    // const history = useHistory();
     const onSearch = async (value, _e, info) => {
+
         console.log("Fetching song infos...")
         const infos = await searchSong(value, config.API_KEY);
         console.log(infos);
 
         if (!infos) return console.log("No song found");
 
-        console.log("Fetching emotions...")
-        const response = await fetch('http://localhost:3001/getEmotions', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json',},
-            body: JSON.stringify({ lyrics: infos.lyrics })
-        });
+        //go to url with song id using react-router 
 
-        const reader = response.body.getReader();
-        while(true) {
-            const {done, value} = await reader.read();
-            if (done) break;
 
-            const chunkAsString = new TextDecoder("utf-8").decode(value);
-            const chunkAsJson = JSON.parse(chunkAsString);
-            console.log('Current average:', chunkAsJson);
-        };
-        console.log('Done')
+        // console.log("Fetching emotions...")
+        // const response = await fetch('http://localhost:3001/getEmotions', {
+        //     method: 'POST',
+        //     headers: {'Content-Type': 'application/json',},
+        //     body: JSON.stringify({ lyrics: infos.lyrics })
+        // });
+
+        // const reader = response.body.getReader();
+        // while(true) {
+        //     const {done, value} = await reader.read();
+        //     if (done) break;
+
+        //     const chunkAsString = new TextDecoder("utf-8").decode(value);
+        //     console.log(chunkAsString)
+        //     const chunkAsJson = JSON.parse(chunkAsString);
+        //     console.log('Current average:', chunkAsJson);
+        // };
+        // console.log('Done')
     };
     return (
         <ConfigProvider

@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PieChart from '../components/donut';
+import { useLocation } from 'react-router-dom';
+
 const SongPage = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get('id');
+
+  useEffect(() => {
+    
+  }, [id]);
+
   return (
     <div
       style={{
@@ -11,14 +21,13 @@ const SongPage = () => {
         marginLeft: "25%",
         padding: "40px",
         marginTop: "5%",
-
       }}
     >
       <h1>Song Page</h1>
       <h1 className="song-title">
         Blinding Lights
       </h1>
-      
+
       <PieChart />
       {/* Add song details here */}
     </div>

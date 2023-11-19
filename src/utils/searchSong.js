@@ -49,12 +49,13 @@ module.exports = searchSong = async (query, apiKey) => {
 		const data = await response.json();
 		if (data.response.hits.length === 0) return null;
 
-		const { full_title, song_art_image_url, url, artist_names } = data.response.hits[0].result;
+		const { full_title, song_art_image_url, url, artist_names, id } = data.response.hits[0].result;
 		return {
 			title: full_title,
 			artist_name: artist_names,
 			albumArt: song_art_image_url,
-			lyrics: await extractLyrics(url)
+			lyrics: await extractLyrics(url),
+			id: id,
 		};
 
 	} catch (e) {
