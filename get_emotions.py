@@ -42,7 +42,7 @@ pre_trainer = Trainer(
 )
 
 # Setting up a pipeline for text classification
-classifier = pipeline("text-classification", model='bhadresh-savani/bert-base-uncased-emotion', top_k=None)
+classifier = pipeline("text-classification", model='RicoCHEH/output', top_k=None)
 
 # Reading input data (lyrics) from command line arguments
 lyrics = sys.argv[1:]

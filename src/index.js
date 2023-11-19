@@ -6,11 +6,11 @@ import reportWebVitals from './reportWebVitals';
 import SearchPage from './pages/SearchPage'
 import SongPage from './pages/SongPage'
 
-
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import DataPage from './pages/DataPage';
 
 
 // function App() {
@@ -23,6 +23,10 @@ const router = createBrowserRouter([
     path: "song",
     element: <div className="App"> <SongPage /></div>,
     // loader: teamLoader,
+  },
+  {
+    path: "suggest",
+    element: <div className="App"> <DataPage /></div>,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
