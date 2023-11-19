@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { AiOutlineHome, AiOutlineDatabase } from "react-icons/ai";
 import { BsMusicNoteBeamed } from "react-icons/bs";
-import './menu.css'; // Import the CSS file
+import './menu.css';
 
 const IconMenu = () => {
   const [hoveredIcon, setHoveredIcon] = useState(null);
@@ -24,14 +24,6 @@ const IconMenu = () => {
         onMouseLeave={handleMouseLeave}
       >
         <AiOutlineHome size={45}/>
-      </Link>
-      <Link 
-        to="/song" 
-        className={`icon ${hoveredIcon === 'music' ? 'hovered' : ''}`}
-        onMouseEnter={() => handleMouseEnter('music')}
-        onMouseLeave={handleMouseLeave}
-      >
-        <BsMusicNoteBeamed size={45}/>
       </Link>
       <Link 
         to="/suggest" 
