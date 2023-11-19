@@ -1,62 +1,103 @@
-import React from 'react';
 import SearchBar from '../components/searchbar';
-import SearchCarousel from '../components/carousel';
-import { Carousel } from 'antd';
-import Recommended from '../components/carousel';
+import Slider from 'react-slick'; // Import the carousel component
+import 'slick-carousel/slick/slick.css'; 
+import 'slick-carousel/slick/slick-theme.css';
+import songs from '../data.json';
 
-const SearchPage = () => {
+const styles = {
+    mainContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh', // Full view height
+        overflow: 'hidden', // Prevent scrolling
+    },
+    searchContainer: {
+        width: "50%",
+        backgroundColor: 'rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'blur(10px)',
+        borderRadius: '8px',
+        padding: "40px 0",
+    },
+    carouselContainer: {
+        width: "50%", // Set the width to 50% to match the searchContainer
+        paddingBottom: "40px",
+        marginTop: "2%",
+    },
+    title: {
+        fontSize: "75px",
+        fontFamily: "Roboto",
+        marginBottom: "40px",
+    },
+};
+
+
+const cardStyles = {
+    card: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#fff',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
+        display: 'flex',
+        padding: '20px'
+    },
+    image: {
+        width: '80%',
+        height: 'auto',
+        alignSelf: 'center',
+        margin: '0 auto',
+        borderRadius: '8px',
+    },
+    title: {
+        margin: '10px 0',
+        fontSize: '18px',
+        fontWeight: 'bold',
+    },
+    artist: {
+        fontSize: '14px',
+        color: '#555',
+    }
+};
+
+
+const Home = () => {
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        autoplay: true,
+        autoplaySpeed: 3000,
+    };
 
     return (
-        <>
-            <div style={{
-                marginTop: "5%",
-                width: "50%",
-                marginLeft: "25%",
-                backgroundColor: 'rgba(255, 255, 255, 0.4)', // Soft Blue with 50% opacity
-                backdropFilter: 'blur(10px)', // Frosted glass blur effect
-                borderRadius: '8px', // Rounded corners
-                // padding: "120px 0 0 120px"
-                paddingTop: "40px",
-                paddingBottom: "120px",
-            }}>
-                <h1 style={{
-                    fontSize: "75px", /* Adjust the font size as needed */
-                    fontFamily: "Roboto",
-                    // color: #333; /* Change the color of the title */
-                    // marginBottom: "40px" /* Adds space between title and search bar */
-
-
-                }}>
-                    Search Jam
-                </h1>
+        <div style={styles.mainContainer}>
+            <div style={styles.searchContainer}>
+                <h1 style={styles.title}>Search Jam</h1>
                 <SearchBar />
-
             </div>
-            <div
-                style={{
-                    marginTop: "5%",
-                    marginLeft: "20%",
-                    marginRight: "20%",
-                    // marginBottom: "10%",
-                    backgroundColor: 'rgba(255, 255, 255, 0.4)', // Soft Blue with 50% opacity
-                    backdropFilter: 'blur(10px)', // Frosted glass blur effect
-                    borderRadius: '8px', // Rounded corners
-                    // center the contents
-                }}
-            >
-                <div
-                    style={{
-                       
-                        paddingTop: "40px", // Adjust the padding as needed
-                        paddingLeft: "40px",
-                        paddingRight: "40px",
-                    }}
-                >
-                    <Recommended />
-                </div>
+            <div style={styles.carouselContainer}>
+                <Slider {...settings}>
+                        {songs.slice(0,15).map((song, index) => (
+                            <div key={index} style={cardStyles.card}>
+                                <img 
+                                    src={song.albumArt} 
+                                    alt={`${song.artist_name} album art`} 
+                                    style={cardStyles.image}
+                                />
+                                <h3 style={cardStyles.title}>{song.title}</h3>
+                                <p style={cardStyles.artist}>{song.artist_name}</p>
+                            </div>
+                        ))}
+                </Slider>
             </div>
-        </>
-    )
+        </div>
+    );
 }
 
-export default SearchPage;
+export default Home;
