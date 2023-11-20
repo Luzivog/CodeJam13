@@ -1,6 +1,7 @@
 # Search Jam
 ### Search up a song and find what emotions are conveyed by the lyrics!
-Project of the team "O(n+k) sorting" for the McGill CodeJam (13th edition). Dev post: https://devpost.com/software/search-jam
+Project of the team "O(n+k) sorting" for the McGill CodeJam (13th edition).
+Dev post: https://devpost.com/software/search-jam
 
 Landing where you can query a song:
 ![Landing Page](https://github.com/Luzivog/Search-Jam/blob/main/src/images/landing_page.png)
